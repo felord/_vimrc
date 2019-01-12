@@ -155,7 +155,7 @@ func! Link()
             if v:shell_error != 0
                 let s:LastShellReturn_L = v:shell_error
             endif
-            if g:iswindows韩式婚纱照片
+            if g:iswindows
                 if s:LastShellReturn_L != 0
                     exe ":bo cope"
                     echohl WarningMsg | echo " linking failed"
