@@ -59,7 +59,7 @@ func! Compile_Run()
             exe "!%<"
         else
             exe s:linux_CFlags
-            exe "!./%<"
+            exe "!".expand("%:t:h")."/%<"
         endif
     elseif expand("%:e") == "cpp" || expand("%:e") == "cxx"
         if g:iswindows
@@ -67,7 +67,7 @@ func! Compile_Run()
             exe "!%<"
         else
             exe s:linux_CPPFlags
-            exe "!./%<"
+            exe "!".expand("%:t:h")."/%<"
         endif
     endif
 endfunc
@@ -80,7 +80,7 @@ func! Debug()
             exe "!gdb %<"
         else
             exe s:linux_CFlags
-            exe "!gdb ./%<"
+            exe "!gdb\ ".expand("%:t:h")."/%<"
         endif
     elseif expand("%:e") == "cpp" || expand("%:e") == "cxx"
         if g:iswindows
@@ -88,7 +88,7 @@ func! Debug()
             exe "!gdb %<"
         else
             exe s:linux_CPPFlags
-            exe "!gdb ./%<"
+            exe "!gdb\ ".expand("%:t:h")."/%<"
         endif
     endif
 endfunc
