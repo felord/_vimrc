@@ -1,5 +1,6 @@
 set number " 设置行号
 set ruler
+set autochdir "自动将当前编辑文件所在路径转化为vim当前路径
 color ron "颜色主题
 set colorcolumn=81 "设置81列处颜色
 set is
