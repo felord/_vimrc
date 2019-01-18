@@ -39,10 +39,10 @@ endif
 "  < 编译、连接、运行配置 >
 "------------------------------------------------------------------------------
 " F5 一键保存、编译、连接存并运行
-map <F5> :call compile_Run()<CR>
+map <F5> :call Compile_Run()<CR>
  
 " F8 一键调试
-map <F8> :call debug()<CR>
+map <F8> :call Debug()<CR>
  
 let s:windows_CFlags = "!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm"
 let s:linux_CFlags = "!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm"
@@ -50,7 +50,7 @@ let s:linux_CFlags = "!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm"
 let s:windows_CPPFlags = "!g++\ -Wall\ -g\ -O0\ %\ -o\ %<"
 let s:linux_CPPFlags = "!g++\ -Wall\ -g\ -O0\ %\ -o\ %<"
  
-func! compile_Run()
+func! Compile_Run()
     exe "w"
     if expand("%:e") == "c"
         if g:iswindows
@@ -71,7 +71,7 @@ func! compile_Run()
     endif
 endfunc
  
-func! debug()
+func! Debug()
     exe "w"
     if expand("%:e") == "c"
         if g:iswindows
