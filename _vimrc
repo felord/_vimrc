@@ -44,15 +44,15 @@ map <F5> :call compile_Run()<CR>
 " F8 一键调试
 map <F8> :call debug()<CR>
  
-let s:windows_CFlags = '!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm'
-let s:linux_CFlags = '!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm'
+let s:windows_CFlags = "!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm"
+let s:linux_CFlags = "!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm"
  
-let s:windows_CPPFlags = '!g++\ -Wall\ -g\ -O0\ %\ -o\ %<'
-let s:linux_CPPFlags = '!g++\ -Wall\ -g\ -O0\ %\ -o\ %<'
+let s:windows_CPPFlags = "!g++\ -Wall\ -g\ -O0\ %\ -o\ %<"
+let s:linux_CPPFlags = "!g++\ -Wall\ -g\ -O0\ %\ -o\ %<"
  
 func! compile_Run()
     exe "w"
-    if &filetype == 'c'
+    if expand("%:e") == "c"
         if g:iswindows
             exe s:windows_CFlags
             exe "!%<"
@@ -73,7 +73,7 @@ endfunc
  
 func! debug()
     exe "w"
-    if &filetype == 'c'
+    if expand("%:e") == "c"
         if g:iswindows
             exe s:windows_CFlags
             exe "!gdb %<"
