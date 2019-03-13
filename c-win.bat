@@ -2,34 +2,54 @@
 
 :: cd /d %~dp0
 :: %1 start "" mshta vbscript:createobject("shell.application").shellexecute("""%~0""","::",,"runas",1)(window.close)&exit
-:: Ç°2¾ä±íÊ¾°ÑbatÎÄ¼şÌáÉıÎª¹ÜÀíÔ±È¨ÏŞ
+:: å‰2å¥è¡¨ç¤ºæŠŠbatæ–‡ä»¶æå‡ä¸ºç®¡ç†å‘˜æƒé™
+
+for /F "skip=2 tokens=1,2*" %%N in ('%SystemRoot%\System32\reg.exe query "HKCU\Environment" /v "Path" 2^>nul') do if /I "%%N" == "Path" call set "UserPath=%%P" & goto UserPathRead
+:: è·å–ç”¨æˆ·è·¯å¾„çš„æ–¹æ³•
+
+echo There is no user PATH defined.
+echo/
+pause
+goto :EOF
+:: æœªè·å¾—ç»“æŸç¨‹åº
+
+:UserPathRead
+echo The user PATH is: %UserPath%
+echo %UserPath%
+:: æ˜¾ç¤ºç”¨æˆ·è·¯å¾„
+
+set /p new_path=è¯·è¾“å…¥ç¯å¢ƒå˜é‡ç›®å½•ï¼š
+:: ç”¨æˆ·è¾“å…¥è‡ªå®šä¹‰ç”¨æˆ·è·¯å¾„
+echo %new_path%
+set new_path1="%new_path%"
+echo %new_path1%
+echo %UserPath%|find /I %new_path1% >nul && echo ç¯å¢ƒå˜é‡å­˜åœ¨ || setx path %UserPath%%new_path%;
+:: ç¯å¢ƒå˜é‡ä¸­æ˜¯å¦å­˜åœ¨è‡ªå®šä¹‰è·¯å¾„,å¦‚æœä¸å­˜åœ¨ï¼Œæ·»åŠ åˆ°ç”¨æˆ·ç¯å¢ƒå˜é‡
 
 md %USERPROFILE%\Documents\WindowsPowerShell
-:: ÔÚ"ÎÄµµ"½¨Á¢¶ÔÓ¦ÎÄ¼ş¼Ğ %USERPROFILE%±íÊ¾ÓÃ»§ÎÄµµÎ»ÖÃ
+:: åœ¨"æ–‡æ¡£"å»ºç«‹å¯¹åº”æ–‡ä»¶å¤¹ %USERPROFILE%è¡¨ç¤ºç”¨æˆ·æ–‡æ¡£ä½ç½®
 
 cd %USERPROFILE%\Documents\WindowsPowerShell 
-:: Ä¬ÈÏÂ·¾¶±äÎª¸ÃÎÄ¼ş¼Ğ
+:: é»˜è®¤è·¯å¾„å˜ä¸ºè¯¥æ–‡ä»¶å¤¹
 
 set today=%date:~0,10%
 set ctime=%TIME: =0%
 set tname=%today%T%ctime:~0,2%%ctime:~3,2%%ctime:~6,2%
-:: µ±Ç°Ê±¼ä¸³Öµ¸øtname±äÁ¿
+:: å½“å‰æ—¶é—´èµ‹å€¼ç»™tnameå˜é‡
 
 if exist profile.ps1 ren profile.ps1 profile-%tname%.back
-:: Èç¹ûprofile.ps1´æÔÚ °Ñ¸ÃÎÄ¼şÖØÃüÃûÎªtname.backÎÄ¼ş
+:: å¦‚æœprofile.ps1å­˜åœ¨ æŠŠè¯¥æ–‡ä»¶é‡å‘½åä¸ºtname.backæ–‡ä»¶
 
 echo start-process -filepath "d:\CPL\colortool\.\colortool" -ArgumentList "-b galaxy" -NoNewWindow -wait>profile.txt 
-::½¨Á¢txtÎÄ¼ş£¬²¢Ğ´ÈëÄÚÈİ£¬ÄÚÈİÎªechoµ½´óÓÚ>·ûºÅÖ®¼äµÄ×Ö·û
+::å»ºç«‹txtæ–‡ä»¶ï¼Œå¹¶å†™å…¥å†…å®¹ï¼Œå†…å®¹ä¸ºechoåˆ°å¤§äº>ç¬¦å·ä¹‹é—´çš„å­—ç¬¦
 
 echo set-location d:\CPL\>>profile.txt 
-::×·¼ÓĞÂÄÚÈİµ½txtÎÄ¼şÖĞ
+::è¿½åŠ æ–°å†…å®¹åˆ°txtæ–‡ä»¶ä¸­
 
 ren profile.txt profile.ps1
-:: txt¸ÄÎªps1¸ñÊ½
-
-
+:: txtæ”¹ä¸ºps1æ ¼å¼
 
 powershell -noprofile -command "&{set-executionpolicy Remotesigned -Scope currentuser}"
-:: °ÑpowershellµÄcurrentuserÔÊĞíÔËĞĞ±¾µØ½Å±¾´ò¿ª
+:: æŠŠpowershellçš„currentuserå…è®¸è¿è¡Œæœ¬åœ°è„šæœ¬æ‰“å¼€
 
 pause
