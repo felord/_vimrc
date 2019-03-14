@@ -23,7 +23,7 @@ set  new_path=C:\vim
 echo %new_path%
 set new_path1="%new_path%"
 echo %new_path1%
-echo %UserPath%|find /I %new_path1% >nul && echo 环境变量存在 || setx path %UserPath%%new_path%;C:\MinGW\bin;
+echo %UserPath%|find /I %new_path1% >nul && echo 环境变量存在 || setx "path" "%UserPath%%new_path%;C:\MinGW\bin;"
 :: 环境变量中是否存在自定义路径,如果不存在，添加到用户环境变量
 
 md %USERPROFILE%\Documents\WindowsPowerShell
