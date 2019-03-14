@@ -47,12 +47,32 @@ set tname=%today%T%ctime:~0,2%%ctime:~3,2%%ctime:~6,2%
 :: 当前时间赋值给tname变量
 
 if exist profile.ps1 ren profile.ps1 profile-%tname%.back
-:: 如果profile.ps1存在 把该文件重命名为tname.back文件
+:: 如果profile.ps1存在则把该文件重命名为tname.back文件
 
-echo start-process -filepath "e:\CPL\colortool\.\colortool" -ArgumentList "-b galaxy" -NoNewWindow -wait>profile.txt 
+SETLOCAL ENABLEDELAYEDEXPANSION
+:: for变量的延迟扩展
+
+FOR %%c in (H G F E D C) do (
+       if exist %%c:\cpl (
+	set var=%%c
+	goto:zz
+)
+)
+:: for语句详解:把cdefgh盘符赋值给变量c
+:: 如果这些盘符中存在cpl文件夹
+:: 就把c赋值给var变量
+:: 跳转到zz语句
+
+goto:eof
+:: 如果没找到cpl文件夹结束程序
+
+:zz
+:: zz语句
+
+echo start-process -filepath "!var!:\CPL\colortool\.\colortool" -ArgumentList "-b galaxy" -NoNewWindow -wait>profile.txt 
 :: 建立txt文件，并写入内容，内容为echo到大于>符号之间的字符
 
-echo set-location e:\CPL\>>profile.txt 
+echo set-location !var!:\CPL\>>profile.txt 
 :: 追加新内容到txt文件中
 
 ren profile.txt profile.ps1
