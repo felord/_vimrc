@@ -45,8 +45,8 @@ map <F5> :call Compile_Run()<CR>
 " F8 一键调试
 map <F8> :call Debug()<CR>
  
-let s:windows_CFlags = "!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm"
-let s:linux_CFlags = "!gcc\ -Wall\ -g\ -O0\ %\ -o\ %<\ -lm"
+let s:windows_CFlags = "!gcc\ -Wall\ -w\ -ansi\ -pedantic\ -std=c99\ -g\ -O0\ %\ -o\ %<\ -lm"
+let s:linux_CFlags = "!gcc\ -Wall\ -w\ -ansi\ -pedantic\ -std=c99\ -g\ -O0\ %\ -o\ %<\ -lm"
  
 let s:windows_CPPFlags = "!g++\ -Wall\ -g\ -O0\ %\ -o\ %<"
 let s:linux_CPPFlags = "!g++\ -Wall\ -g\ -O0\ %\ -o\ %<"
